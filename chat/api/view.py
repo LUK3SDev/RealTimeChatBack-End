@@ -4,6 +4,7 @@ from rest_framework import status, permissions
 from chat.models import ChatRoom, ChatRoomMember, Message
 from .serializers import (
     ChatRoomMemberSerializer,
+    ChatRoomSerializer,
     GetMessageSerializer, 
     PrivateChatCreateSerializer, 
     GroupChatCreateSerializer,
@@ -85,6 +86,18 @@ class GetChatRoomMembers(APIView):
         chatRoomMember = ChatRoomMember.objects.filter(chat_room=chatRoom)
         serializer = ChatRoomMemberSerializer(chatRoomMember, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+class GetChatRoomInfo(APIView):
+    permissions_classes = [permissions.IsAuthenticated]
+
+    def get(self, request):
+        chat_room_id = request.query_params.get('chat_room_id')
+        chatRoom = ChatRoom.objects.get(id=chat_room_id)
+        serializer = ChatRoomSerializer(chatRoom)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+
 
 
 class CreateMessage(APIView):

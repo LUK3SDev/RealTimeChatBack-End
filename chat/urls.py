@@ -1,6 +1,6 @@
 from django.urls import path
 from .api.view import (
-    CreatePrivateChatView, CreateGroupChatView,
+    CreatePrivateChatView, CreateGroupChatView, GetChatRoomInfo,
     GetChatRoomMembers, CreateMessage,
     GetMessage
 )
@@ -15,6 +15,11 @@ urlpatterns = [
         'group/create/',
         CreateGroupChatView.as_view(),
         name='create_group_chat'
+    ),
+    path(
+        'get_chat_room_info/',
+        GetChatRoomInfo.as_view(),
+        name='get_chat_room_info'
     ),
     path(
         'get_chat_room_members/',
