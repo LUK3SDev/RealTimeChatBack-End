@@ -9,9 +9,10 @@ from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
 
 
-class RegisterView(APIView):
+class RegisterView(APIView):    
     def post(self, request):
         serializer = RegisterSerializer(data=request.data)
+        print(serializer)
         if serializer.is_valid():
             serializer.save()
             return Response(

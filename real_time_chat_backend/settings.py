@@ -88,8 +88,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'real_time_chat_db',           # Il nome del database che hai creato
-        'USER': 'real_time_chat_user',         # Il nome utente del database
-        'PASSWORD': 'real_time_chat_user', # La password dell'utente
+        'USER': 'postgres',         # Il nome utente del database
+        'PASSWORD': 'postgres', # La password dell'utente
         'HOST': 'localhost',         # Indirizzo IP o hostname del server PostgreSQL (solitamente 'localhost' per lo sviluppo locale)
         'PORT': '5432',                  # Porta di PostgreSQL (lascia vuoto per la porta predefinita 5432)
     }
