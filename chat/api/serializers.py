@@ -85,9 +85,39 @@ class MessageCreateSerializer(serializers.Serializer):
 
 
 class ChatRoomSerializer(serializers.ModelSerializer):
+    name = serializers.SerializerMethodField()
+
     class Meta:
         model = ChatRoom
         fields = ['id', 'name', 'description', 'room_type', 'created_at']
+
+    def get_name(self, obj):
+        request = self.context.get('request')
+        if (
+            obj.room_type == ChatRoom.PRIVATE
+            and request is not None
+            and getattr(request, 'user', None)
+            and request.user.is_authenticated
+        ):
+            other_member = (
+                obj.members.select_related('user')
+                .exclude(user=request.user)
+                .first()
+            )
+            if other_member and other_member.user:
+                # Preferisci full_name se disponibile, altrimenti username
+                full_name = getattr(other_member.user, 'get_full_name', None)
+                if callable(full_name):
+                    full_name_value = full_name()
+                    if full_name_value:
+                        return full_name_value
+                username = getattr(other_member.user, 'username', None)
+                if username:
+                    return username
+                return str(other_member.user)
+
+        # Per i gruppi o se non disponibile, ritorna il nome della stanza
+        return obj.name
 
 
 

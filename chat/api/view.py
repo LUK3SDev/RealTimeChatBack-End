@@ -49,6 +49,7 @@ class CreateGroupChatView(APIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def post(self, request):
+        print(request.data)
         serializer = GroupChatCreateSerializer(data=request.data)
         if serializer.is_valid():
             name = serializer.validated_data['name']
@@ -94,10 +95,17 @@ class GetChatRoomInfo(APIView):
     def get(self, request):
         chat_room_id = request.query_params.get('chat_room_id')
         chatRoom = ChatRoom.objects.get(id=chat_room_id)
-        serializer = ChatRoomSerializer(chatRoom)
+        serializer = ChatRoomSerializer(chatRoom, context={"request": request})
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
+class GetListChatRoom(APIView):
+    permissions_classes = [permissions.IsAuthenticated]
+    
+    def get(self, request):
+        chatRooms = ChatRoom.objects.filter(members__user=request.user)
+        serializer = ChatRoomSerializer(chatRooms, many=True, context={"request": request})
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 class CreateMessage(APIView):

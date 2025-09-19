@@ -56,6 +56,8 @@ class UserPublicKeySerializer(serializers.ModelSerializer):
 
 
 class UserSerializer(serializers.Serializer):
+    id = serializers.IntegerField()
+    uuid = serializers.UUIDField()
     username = serializers.CharField(max_length=150)
     first_name = serializers.CharField(max_length=30, required=False, allow_blank=True)
     last_name = serializers.CharField(max_length=150, required=False, allow_blank=True)

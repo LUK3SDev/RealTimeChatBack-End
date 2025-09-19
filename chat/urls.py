@@ -1,7 +1,7 @@
 from django.urls import path
 from .api.view import (
     CreatePrivateChatView, CreateGroupChatView, GetChatRoomInfo,
-    GetChatRoomMembers, CreateMessage,
+    GetChatRoomMembers, CreateMessage, GetListChatRoom,
     GetMessage
 )
 
@@ -25,6 +25,11 @@ urlpatterns = [
         'get_chat_room_members/',
         GetChatRoomMembers.as_view(),
         name='get_chat_room_members',
+    ),
+    path(
+        'list_chat_rooms/',
+        GetListChatRoom.as_view(),
+        name='list_chat_rooms',
     ),
     path(
         'send_message/',
