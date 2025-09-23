@@ -13,6 +13,11 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 from pathlib import Path
 import os
+from dotenv import load_dotenv # Importa la libreria
+
+# Carica le variabili d'ambiente dal file .env nella radice del progetto
+# Assicurati che il tuo file .env si trovi allo stesso livello di manage.py
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
