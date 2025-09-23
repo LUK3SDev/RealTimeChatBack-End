@@ -92,7 +92,7 @@ DATABASES = {
         'NAME': os.environ.get('POSTGRES_DB'),
         'USER': os.environ.get('POSTGRES_USER'),
         'PASSWORD': os.environ.get('POSTGRES_PASSWORD'),
-        'HOST': 'db',  # Il nome del servizio nel docker-compose.yml
+        'HOST': 'localhost',  # Il nome del servizio nel docker-compose.yml
         'PORT': '5432',
     }
 }
