@@ -8,9 +8,11 @@ https://docs.djangoproject.com/en/5.2/topics/settings/
 
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
+
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -87,11 +89,11 @@ WSGI_APPLICATION = 'real_time_chat_backend.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'real_time_chat_db',           # Il nome del database che hai creato
-        'USER': 'postgres',         # Il nome utente del database
-        'PASSWORD': 'postgres', # La password dell'utente
-        'HOST': 'localhost',         # Indirizzo IP o hostname del server PostgreSQL (solitamente 'localhost' per lo sviluppo locale)
-        'PORT': '5432',                  # Porta di PostgreSQL (lascia vuoto per la porta predefinita 5432)
+        'NAME': os.environ.get('POSTGRES_DB'),
+        'USER': os.environ.get('POSTGRES_USER'),
+        'PASSWORD': os.environ.get('POSTGRES_PASSWORD'),
+        'HOST': 'db',  # Il nome del servizio nel docker-compose.yml
+        'PORT': '5432',
     }
 }
 
